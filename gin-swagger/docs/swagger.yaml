@@ -1,0 +1,134 @@
+definitions:
+  main.Article:
+    properties:
+      content:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      updated_at:
+        type: string
+    required:
+    - content
+    - title
+    type: object
+  main.User:
+    type: object
+info:
+  contact: {}
+paths:
+  /api/articles:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Article'
+            type: array
+      summary: 获取所有文章
+      tags:
+      - articles
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 文章内容
+        in: body
+        name: article
+        required: true
+        schema:
+          $ref: '#/definitions/main.Article'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.Article'
+      summary: 创建文章
+      tags:
+      - articles
+  /api/articles/{id}:
+    delete:
+      parameters:
+      - description: 文章ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: No Content
+      summary: 删除文章
+      tags:
+      - articles
+    get:
+      parameters:
+      - description: 文章ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Article'
+      summary: 获取单个文章
+      tags:
+      - articles
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 文章ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 更新内容
+        in: body
+        name: article
+        required: true
+        schema:
+          $ref: '#/definitions/main.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Article'
+      summary: 更新文章
+      tags:
+      - articles
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户凭证
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/main.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: JWT Token
+          schema:
+            type: string
+      summary: 用户登录
+      tags:
+      - auth
+swagger: "2.0"
