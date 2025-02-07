@@ -1,0 +1,2 @@
+# GBLOG
+a simple blog
